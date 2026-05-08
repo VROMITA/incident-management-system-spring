@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
 @Service
 public class IncidentService {
 
@@ -20,6 +21,13 @@ public class IncidentService {
         this.incidentRepository=incidentRepository;
     }
 
+
+    /**
+     * Creates a new incident and calculates the SLA deadline based on priority.
+     *
+     * @param incidentRequest DTO containing the incident data provided by the client
+     * @return the saved Incident with generated ID and calculated SLA deadline
+     */
     public Incident createIncident(IncidentRequest incidentRequest){
 
         Incident incident = IncidentMapper.toEntity(incidentRequest);
@@ -30,9 +38,23 @@ public class IncidentService {
 
     }
 
+    /**
+     * Retrieves all incidents from the database.
+     *
+     * @return list of all incidents, empty list if none exist
+     */
+
     public List<Incident> getAllIncidents(){
         return incidentRepository.findAll();
     }
+
+    /**
+     * It returns the incidents by the given ID
+     *
+     * @param id the ID is provided to find the correspondent incident
+     * @throws IncidentNotFoundException if no incident is found with the given ID
+     * @return it returns the incident
+     */
 
     public Incident getIncidentById(long id){
         return incidentRepository.findById(id) .orElseThrow(() ->
@@ -40,8 +62,14 @@ public class IncidentService {
 
     }
 
+    /**
+     * Update the incident searched by ID and if the priority changed, the SLA is recalculated
+     * @param id the ID of the incidents
+     * @param request a DTO is given to update the incident
+     * @return return the incident with the new values
+     */
     public Incident updateIncident(Long id, IncidentRequest request){
-        // Find Incident by ID
+
         Incident incidentById = getIncidentById(id);
 
         IncidentMapper.toUpdate(incidentById, request);
@@ -51,6 +79,12 @@ public class IncidentService {
 
         return incidentRepository.save(incidentById);
     }
+
+    /**
+     * It looks up for the incident with ID and delete
+     * @param id the ID of the Incident
+     * @throws IncidentNotFoundException if no incident is found with the given ID
+     */
 
     public void deleteIncidentById(long id){
 
