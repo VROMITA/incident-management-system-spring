@@ -44,17 +44,10 @@ public class IncidentService {
         // Find Incident by ID
         Incident incidentById = getIncidentById(id);
 
-        // update field from request incident
-        incidentById.setTitle(request.getTitle());
-        incidentById.setDescription(request.getDescription());
-        incidentById.setPriority(request.getPriority());
-        // update SLA
+        IncidentMapper.toUpdate(incidentById, request);
+
         incidentById.setSlaDeadline(
                 LocalDateTime.now().plusHours(request.getPriority().getSlaHours()));
-        incidentById.setSource(request.getSource());
-        incidentById.setStatus(request.getStatus());
-        incidentById.setAssignedTeam(request.getAssignedTeam());
-        incidentById.setAssignedTo(request.getAssignedTo());
 
         return incidentRepository.save(incidentById);
     }
