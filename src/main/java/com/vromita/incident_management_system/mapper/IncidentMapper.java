@@ -3,10 +3,18 @@ package com.vromita.incident_management_system.mapper;
 import com.vromita.incident_management_system.dto.IncidentRequest;
 import com.vromita.incident_management_system.model.Incident;
 
-import java.time.LocalDateTime;
-
+/**
+ * Mapper class responsible for converting between IncidentRequest DTO and Incident Entity.
+ */
 public class IncidentMapper {
 
+    /**
+     * Converts an IncidentRequest DTO to a new Incident Entity.
+     * Does not set slaDeadline (business logic handled by Service).
+     *
+     * @param incidentRequest the DTO containing incident data from the client
+     * @return a new Incident Entity with fields mapped from the DTO
+     */
     public static Incident toEntity(IncidentRequest incidentRequest){
 
         Incident incident = new Incident();
@@ -20,6 +28,14 @@ public class IncidentMapper {
 
         return incident;
     }
+
+    /**
+     * Updates an existing Incident Entity with data from an IncidentRequest DTO.
+     * Does not update slaDeadline (business logic handled by Service).
+     *
+     * @param incident the existing Incident Entity to update
+     * @param incidentRequest the DTO containing the updated data
+     */
 
     public static void toUpdate(Incident incident, IncidentRequest incidentRequest){
         incident.setTitle(incidentRequest.getTitle());

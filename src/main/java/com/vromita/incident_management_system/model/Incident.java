@@ -1,13 +1,16 @@
 package com.vromita.incident_management_system.model;
 
 import jakarta.persistence.*;
-import org.hibernate.cfg.Compatibility;
-
 import java.time.LocalDateTime;
 
+
+/**
+ * Entity representing an IT incident in the system.
+ * Maps to the 'incidents' table in the database.
+ * SLA deadline is automatically calculated by the Service based on priority.
+ */
 @Entity
 @Table(name = "incidents")
-
 public class Incident {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
