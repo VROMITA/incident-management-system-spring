@@ -4,6 +4,7 @@ import com.vromita.incident_management_system.dto.IncidentRequest;
 import com.vromita.incident_management_system.exception.IncidentNotFoundException;
 import com.vromita.incident_management_system.mapper.IncidentMapper;
 import com.vromita.incident_management_system.model.Incident;
+import com.vromita.incident_management_system.model.Status;
 import com.vromita.incident_management_system.repository.IncidentRepository;
 import org.springframework.stereotype.Service;
 
@@ -76,6 +77,10 @@ public class IncidentService {
 
         incidentById.setSlaDeadline(
                 LocalDateTime.now().plusHours(request.getPriority().getSlaHours()));
+
+        incidentById.setClosedAt(
+                request.getStatus() == Status.CLOSED ? LocalDateTime.now() : null
+        );
 
         return incidentRepository.save(incidentById);
     }

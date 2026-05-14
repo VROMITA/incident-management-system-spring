@@ -44,6 +44,9 @@ public class Incident {
     @Column(name = "last_updated_at")
     private LocalDateTime updatedAt;
 
+    @Column(name = "closed_at")
+    private LocalDateTime closedAt;
+
 
     @Column(name = "assigned_to")
     private String assignedTo;
@@ -137,6 +140,10 @@ public class Incident {
         this.source = source;
     }
 
+    public LocalDateTime getClosedAt() {
+        return closedAt;
+    }
+
     public void setAssignedTeam(Team assignedTeam) {
         this.assignedTeam = assignedTeam;
     }
@@ -151,6 +158,10 @@ public class Incident {
 
     public void setAssignedTo(String assignedTo) {
         this.assignedTo = assignedTo;
+    }
+
+    public void setClosedAt(LocalDateTime closedAt) {
+        this.closedAt = closedAt;
     }
 
     public void setSlaDeadline(LocalDateTime slaDeadline) {
