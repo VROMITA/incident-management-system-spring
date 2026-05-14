@@ -1,5 +1,6 @@
 package com.vromita.incident_management_system.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
  * Maps to the 'incidents' table in the database.
  * SLA deadline is automatically calculated by the Service based on priority.
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 @Table(name = "incidents")
 public class Incident {
