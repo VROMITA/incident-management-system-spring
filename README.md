@@ -142,10 +142,10 @@ mvn test
 
 ## Roadmap
 
-- **v2.0** — Spring Security + JWT Authentication
-- **v2.1** — RBAC with L1/L2/L3 roles
-- **v2.2** — Comment System (SLA reset on team comment)
+- **v2.0** — Spring Security + JWT Authentication + RBAC
+- **v2.1** — Comment System (SLA reset on team comment)
 - **v3.0** — SLA Reporting + Breach detection + Automatic escalation
+- **v4.0** — Swagger / OpenAPI
 
 ## 👨‍💻 Author
 
