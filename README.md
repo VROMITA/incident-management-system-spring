@@ -1,8 +1,14 @@
 # Incident Management System (IMS) — Spring Boot REST API
 
 A RESTful API for managing IT incidents, built with Spring Boot and PostgreSQL.
-This project is part of a portfolio demonstrating backend Java development skills,
-including a deliberate progression from raw JDBC (CLI version) to Spring Boot + JPA.
+
+## About This Project
+
+This is the **Spring Boot version** of my Incident Management System, part of a deliberate learning path.
+
+A previous **CLI version** was built using raw JDBC to master database persistence fundamentals 
+(connection management, prepared statements, manual ResultSet mapping) before adopting Spring Boot abstractions. 
+This approach demonstrates understanding of what frameworks abstract away, not just how to use them.
 
 ## Tech Stack
 
@@ -69,6 +75,31 @@ Deletes an incident by ID. Returns `204 No Content` or `404 Not Found`.
     "assignedTo": "vromita"
 }
 ```
+## Error Response Example
+
+All errors return a standardized response format:
+
+```json
+{
+    "status": 404,
+    "message": "Incident with id 999 not found",
+    "timestamp": "2026-05-14T22:00:00"
+}
+```
+
+Validation errors include field-level details:
+
+```json
+{
+    "status": 400,
+    "message": "Validation Failed",
+    "timestamp": "2026-05-14T22:00:00",
+    "errors": {
+        "title": "Title is required",
+        "priority": "Priority is required"
+    }
+}
+```
 
 ### Priority Levels & SLA
 - `CRITICAL` → 4 hours
@@ -88,6 +119,33 @@ src/main/java/com/vromita/incident_management_system/
 ├── mapper/            # DTO to Entity converters
 └── exception/         # Custom exceptions and global handler
 ```
+
+## Testing
+
+```bash
+mvn test
+```
+
+6 unit tests covering the Service layer with JUnit 5 and Mockito.
+
+## Versions
+
+### v1.0.0 — REST API Core
+- Full CRUD REST API
+- Automatic SLA calculation by priority
+- SLA recalculation when priority changes
+- Automatic `closedAt` timestamp lifecycle
+- Bean Validation with `@Valid`, `@NotBlank`, `@NotNull`
+- Centralized error handling with `@ControllerAdvice`
+- Standardized `ErrorResponse` DTO with Jackson `@JsonInclude`
+- JUnit 5 + Mockito test coverage on Service layer
+
+## Roadmap
+
+- **v2.0** — Spring Security + JWT Authentication
+- **v2.1** — RBAC with L1/L2/L3 roles
+- **v2.2** — Comment System (SLA reset on team comment)
+- **v3.0** — SLA Reporting + Breach detection + Automatic escalation
 
 ## 👨‍💻 Author
 
