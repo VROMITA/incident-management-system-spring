@@ -73,10 +73,14 @@ public class IncidentService {
 
         Incident incidentById = getIncidentById(id);
 
-        IncidentMapper.toUpdate(incidentById, request);
+        if (request.getPriority()!= incidentById.getPriority()){
 
-        incidentById.setSlaDeadline(
-                LocalDateTime.now().plusHours(request.getPriority().getSlaHours()));
+            incidentById.setSlaDeadline(
+                    LocalDateTime.now().plusHours(request.getPriority().getSlaHours()));
+
+        }
+
+        IncidentMapper.toUpdate(incidentById, request);
 
         incidentById.setClosedAt(
                 request.getStatus() == Status.CLOSED ? LocalDateTime.now() : null
