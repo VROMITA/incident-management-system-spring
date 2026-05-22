@@ -44,11 +44,12 @@ public class SecurityConfig {
                 ).sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 ).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
+                 .build();
     }
 
     @Bean
     public AuthenticationManager authenticationManagerBean(AuthenticationConfiguration config ) throws Exception {
         return config.getAuthenticationManager();
     }
+
 }
