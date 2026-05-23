@@ -1,6 +1,7 @@
 package com.vromita.incident_management_system.exception;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,6 +23,16 @@ public class GlobalExceptionHandler {
             );
             return ResponseEntity.status(404).body(error);
         }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorResponse> handleAccessDenied(AccessDeniedException e) {
+        ErrorResponse error = new ErrorResponse(
+                "Access Denied",
+                403,
+                LocalDateTime.now()
+        );
+        return ResponseEntity.status(403).body(error);
+    }
 
         @ExceptionHandler(Exception.class)
         public ResponseEntity<ErrorResponse> handleGenericException(Exception e) {

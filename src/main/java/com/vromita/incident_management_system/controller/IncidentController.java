@@ -6,6 +6,7 @@ import com.vromita.incident_management_system.model.Incident;
 import com.vromita.incident_management_system.service.IncidentService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -84,6 +85,7 @@ public class IncidentController {
      * @return the method does not return anything but only the status code 204 if it is successful or 404 status code if the id has not been found
      */
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('L3')")
     public ResponseEntity<Void> deleteIncident (@PathVariable long id) {
 
        incidentService.deleteIncidentById(id);
