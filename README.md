@@ -1,3 +1,9 @@
+![Java](https://img.shields.io/badge/Java-21-orange)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.x-green)
+![Spring Security](https://img.shields.io/badge/Spring%20Security-JWT-blue)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue)
+![Maven](https://img.shields.io/badge/Maven-3.x-red)
+
 # Incident Management System (IMS) — Spring Boot REST API
 
 A RESTful API for managing IT incidents, built with Spring Boot and PostgreSQL.
@@ -15,6 +21,7 @@ This approach demonstrates understanding of what frameworks abstract away, not j
 - **Java 21**
 - **Spring Boot 4.x**
 - **Spring Data JPA / Hibernate**
+- **Spring Security + JJWT**
 - **PostgreSQL** (via Docker)
 - **Maven**
 
@@ -60,7 +67,10 @@ Returns a single incident by ID. Returns `200 OK` or `404 Not Found`.
 Updates an existing incident. Returns `200 OK` or `404 Not Found`.
 
 ### `DELETE /api/incidents/{id}`
-Deletes an incident by ID. Returns `204 No Content` or `404 Not Found`.
+Deletes an incident by ID. Returns `204 No Content` or `404 Not Found`. - Only L3 role
+
+### `POST /auth/login`
+Login with username and password - authentication required
 
 ---
 
@@ -101,6 +111,16 @@ Validation errors include field-level details:
 }
 ```
 
+Not authorized error for deleting an incident
+
+```json
+{
+"message": "Access Denied",
+"status": 403,
+"timestamp": "2026-05-23T19:27:41.252896"
+}
+
+```
 ### Priority Levels & SLA
 - `CRITICAL` → 4 hours
 - `HIGH` → 12 hours
@@ -117,7 +137,9 @@ src/main/java/com/vromita/incident_management_system/
 ├── model/             # JPA Entities and Enums
 ├── dto/               # Data Transfer Objects
 ├── mapper/            # DTO to Entity converters
-└── exception/         # Custom exceptions and global handler
+├── exception/         # Custom exceptions and global handler
+└── security/          # JWT filter, utility and security configuration
+
 ```
 
 ## Testing
@@ -140,12 +162,22 @@ mvn test
 - Standardized `ErrorResponse` DTO with Jackson `@JsonInclude`
 - JUnit 5 + Mockito test coverage on Service layer
 
+### v2.0 — Spring Security + JWT Authentication
+- JWT token-based authentication (stateless)
+- Login endpoint POST /auth/login
+- BCrypt password encoding
+- Role-based access control (RBAC) — L1, L2, L3
+- Delete restricted to L3 via @PreAuthorize
+- 403 Forbidden for unauthorized actions
+
 ## Roadmap
 
-- **v2.0** — Spring Security + JWT Authentication + RBAC
 - **v2.1** — Comment System (SLA reset on team comment)
 - **v3.0** — SLA Reporting + Breach detection + Automatic escalation
 - **v4.0** — Swagger / OpenAPI
+
+## License
+This project is licensed under the MIT License.
 
 ## 👨‍💻 Author
 
