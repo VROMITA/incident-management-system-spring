@@ -173,8 +173,9 @@ mvn test
 ## Roadmap
 
 - **v2.1** — Comment System (SLA reset on team comment)
-- **v3.0** — SLA Reporting + Breach detection + Automatic escalation
-- **v4.0** — Swagger / OpenAPI
+- **v2.2** — Logout endpoint
+- **v3.0** — Swagger / OpenAPI + Production deployment (Railway + demo accounts)
+- **v4.0** — SLA Reporting + Breach detection + Automatic escalation
 
 ## License
 This project is licensed under the MIT License.
