@@ -174,8 +174,8 @@ mvn test
 
 - **v2.1** — Comment System (SLA reset on team comment)
 - **v2.2** — Logout endpoint
+- **v2.5** — Complete RBAC (Incident → AppUser + ownership + escalation validation)
 - **v3.0** — Swagger / OpenAPI + Production deployment (Railway + demo accounts)
-- **v4.0** — SLA Reporting + Breach detection + Automatic escalation
 
 ## License
 This project is licensed under the MIT License.
