@@ -1,9 +1,6 @@
 package com.vromita.incident_management_system.dto;
 
-import com.vromita.incident_management_system.model.Priority;
-import com.vromita.incident_management_system.model.Source;
-import com.vromita.incident_management_system.model.Status;
-import com.vromita.incident_management_system.model.Team;
+import com.vromita.incident_management_system.model.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
