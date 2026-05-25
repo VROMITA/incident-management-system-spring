@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 
-// DTO for update data
 public class IncidentRequest {
 
     @NotBlank(message="Title is required")
