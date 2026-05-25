@@ -8,8 +8,6 @@ import com.vromita.incident_management_system.repository.CommentRepository;
 import com.vromita.incident_management_system.repository.IncidentRepository;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
