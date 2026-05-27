@@ -72,6 +72,12 @@ Deletes an incident by ID. Returns `204 No Content` or `404 Not Found`. - Only L
 ### `POST /auth/login`
 Login with username and password - authentication required
 
+### `POST /api/incidents/{id}/comments`
+Create a new comment on the selected incident
+
+### `GET /api/incidents/{id}/comments`
+Retrieve all the comments on the selected incident
+
 ---
 
 ### Request Body Example (POST/PUT)
@@ -169,12 +175,16 @@ mvn test
 - Role-based access control (RBAC) — L1, L2, L3
 - Delete restricted to L3 via @PreAuthorize
 - 403 Forbidden for unauthorized actions
+- 
+### v2.1 — Comment System
+
+- Comment System: User can add comments and retrieve comments from incidents
+- Automatic SLA reset when the assigned team responds with a comment
 
 ## Roadmap
 
-- **v2.1** — Comment System (SLA reset on team comment)
 - **v2.2** — Logout endpoint
-- **v2.5** — Complete RBAC (Incident → AppUser + ownership + escalation validation)
+- **v2.3** — Complete RBAC (Incident → AppUser + ownership + escalation validation)
 - **v3.0** — Swagger / OpenAPI + Production deployment (Railway + demo accounts)
 
 ## License
