@@ -4,7 +4,9 @@ import com.vromita.incident_management_system.model.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-
+/**
+ * DTO for IncidentService and IncidentController
+ */
 public class IncidentRequest {
 
     @NotBlank(message="Title is required")

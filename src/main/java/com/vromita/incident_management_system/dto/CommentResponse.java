@@ -3,7 +3,7 @@ package com.vromita.incident_management_system.dto;
 import java.time.LocalDateTime;
 
 /**
- * DTO class for Comment controller
+ * DTO class for CommentController
  */
 public class CommentResponse {
 

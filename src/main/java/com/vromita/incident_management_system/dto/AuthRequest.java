@@ -2,6 +2,11 @@ package com.vromita.incident_management_system.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
+
+/**
+ *  DTO for AuthController
+ */
+
 public class AuthRequest {
 
     @NotBlank

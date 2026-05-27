@@ -32,11 +32,11 @@ public class JwtFilter extends OncePerRequestFilter {
      * via JwtUtil, loads the user from the DB via AppUserService, and if everything is valid it sets the authentication
      * in the SecurityContext. If the token is missing or invalid, the request passes through unauthenticated.
      * SecurityConfig will decide whether to block it or not.
-     * @param request
-     * @param response
-     * @param filterChain
-     * @throws ServletException
-     * @throws IOException
+     * @param request the incoming HTTP request
+     * @param response the HTTP response
+     * @param filterChain the filter chain to pass the request along
+     * @throws ServletException if a servlet error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

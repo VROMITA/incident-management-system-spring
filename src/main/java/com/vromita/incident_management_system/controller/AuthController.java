@@ -32,8 +32,9 @@ public class AuthController {
 
     /**
      * The method firstly authenticate the user then extract the credentials and create the token
-     * @param request
-     * @return token for the user
+     * @param request DTO containing username and password
+     * @return 200 OK with JWT token as String
+     * @throws org.springframework.security.authentication.BadCredentialsException if credentials are invalid
      */
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody @Valid AuthRequest request) {

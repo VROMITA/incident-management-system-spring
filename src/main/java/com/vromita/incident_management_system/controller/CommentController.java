@@ -24,6 +24,13 @@ public class CommentController {
     }
 
 
+    /**
+     * Method that create a comment
+     * @param id the ID of the incident to comment on
+     * @param request DTO body of the comment
+     * @param authentication verify if the user is authenticated
+     * @return 201 successful
+     */
     @PostMapping("/{id}/comments")
     public ResponseEntity<CommentResponse> createComment(@PathVariable Long id,
                                                          @Valid @RequestBody CommentRequest request,
@@ -37,6 +44,12 @@ public class CommentController {
         return ResponseEntity.status(201).body(response);
     }
 
+
+    /**
+     * Method that return all the comment by incident ID
+     * @param id of the incident
+     * @return the list of comments
+     */
     @GetMapping("/{id}/comments")
     public ResponseEntity<List<CommentResponse>> getAllComments(@PathVariable Long id) {
 

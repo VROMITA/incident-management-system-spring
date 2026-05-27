@@ -28,7 +28,15 @@ public class CommentService{
     }
 
 
-
+    /**
+     * Method to create a comment
+     * @param incidentId the incident ID to comment on
+     * @param commentRequest DTO containing the comment text
+     * @param username of the authenticated user
+     * @throws IncidentNotFoundException when incident has not been found
+     * @throws UsernameNotFoundException if the user is not authenticated
+     * @return the Comment object
+     */
     public Comment createComment(Long incidentId, CommentRequest commentRequest, String username ) {
 
         Comment comment = new Comment();
@@ -54,6 +62,12 @@ public class CommentService{
 
     }
 
+    /**
+     * Method to get all the comments of an Incident
+     * @param incidentId the ID of the incident where to find the comments
+     * @throws IncidentNotFoundException if the incident has not found
+     * @return a list of comments
+     */
     public List<Comment> getCommentsByIncidentId(Long incidentId) {
 
         incidentRepository.findById(incidentId).orElseThrow(() ->

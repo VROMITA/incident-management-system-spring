@@ -15,6 +15,12 @@ public class AppUserService implements UserDetailsService {
         this.appUserRepository = appUserRepository;
     }
 
+    /**
+     * Method that return the user by the given username
+     * @param username the username identifying the user whose data is required.
+     * @throws UsernameNotFoundException if no user is found with the given username
+     * @return the user
+     */
     @Override
     public UserDetails loadUserByUsername(String username){
 

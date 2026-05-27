@@ -2,6 +2,9 @@ package com.vromita.incident_management_system.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
+/**
+ * DTO for CommentService
+ */
 public class CommentRequest {
 
     @NotBlank

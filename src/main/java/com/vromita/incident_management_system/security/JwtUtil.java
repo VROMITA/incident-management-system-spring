@@ -28,7 +28,7 @@ public class JwtUtil {
 
     /**
      * Method used to generate the token
-     * @param userDetails
+     * @param userDetails the authenticated user details
      * @return the token as String
      */
     public String generateToken(UserDetails userDetails){
@@ -43,7 +43,7 @@ public class JwtUtil {
 
     /**
      * The method receive a token JWT as String and it extracts the username
-     * @param token
+     * @param token the JWT token string
      * @return the username
      */
     public String extractUsername(String token){
@@ -60,8 +60,8 @@ public class JwtUtil {
      * The method verifies if the token is still valid. First compare the username of the token
      * with the username in the DB and then with extractUsername() if the token or the signature
      * is not valid it throws an exception
-     * @param token
-     * @param userDetails
+     * @param token the JWT token string
+     * @param userDetails the authenticated user
      * @return true or false whether the token is valid
      */
     public boolean isTokenValid(String token, UserDetails userDetails){
