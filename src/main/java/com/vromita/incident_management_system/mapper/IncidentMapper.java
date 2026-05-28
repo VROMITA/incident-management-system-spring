@@ -1,6 +1,7 @@
 package com.vromita.incident_management_system.mapper;
 
 import com.vromita.incident_management_system.dto.IncidentRequest;
+import com.vromita.incident_management_system.dto.IncidentResponse;
 import com.vromita.incident_management_system.model.Incident;
 
 /**
@@ -23,7 +24,6 @@ public class IncidentMapper {
         incident.setDescription(incidentRequest.getDescription());
         incident.setPriority(incidentRequest.getPriority());
         incident.setAssignedTeam(incidentRequest.getAssignedTeam());
-        incident.setAssignedTo(incidentRequest.getAssignedTo());
         incident.setSource(incidentRequest.getSource());
 
         return incident;
@@ -44,7 +44,26 @@ public class IncidentMapper {
         incident.setSource(incidentRequest.getSource());
         incident.setStatus(incidentRequest.getStatus());
         incident.setAssignedTeam(incidentRequest.getAssignedTeam());
-        incident.setAssignedTo(incidentRequest.getAssignedTo());
 
+    }
+
+    public static IncidentResponse toResponse(Incident incident){
+
+        IncidentResponse incidentResponse = new IncidentResponse();
+
+        incidentResponse.setId(incident.getId());
+        incidentResponse.setTitle(incident.getTitle());
+        incidentResponse.setDescription(incident.getDescription());
+        incidentResponse.setPriority(incident.getPriority());
+        incidentResponse.setStatus(incident.getStatus());
+        incidentResponse.setSource(incident.getSource());
+        incidentResponse.setAssignedTeam(incident.getAssignedTeam());
+        incidentResponse.setAssignedUser(incident.getAssignedTo() != null ? incident.getAssignedTo().getUsername() : null);
+        incidentResponse.setCreatedAt(incident.getCreatedAt());
+        incidentResponse.setUpdatedAt(incident.getUpdatedAt());
+        incidentResponse.setClosedAt(incident.getClosedAt());
+        incidentResponse.setSlaDeadline(incident.getSlaDeadline());
+
+        return incidentResponse;
     }
 }

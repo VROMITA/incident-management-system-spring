@@ -2,6 +2,7 @@ package com.vromita.incident_management_system.exception;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -64,6 +65,18 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(400).body(error);
      }
+
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleUsernameNotFound(UsernameNotFoundException e) {
+
+        ErrorResponse error = new ErrorResponse(
+                e.getMessage(),
+                404,
+                LocalDateTime.now()
+        );
+        return ResponseEntity.status(404).body(error);
+    }
 
     }
 

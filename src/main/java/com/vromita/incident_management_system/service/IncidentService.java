@@ -5,7 +5,9 @@ import com.vromita.incident_management_system.exception.IncidentNotFoundExceptio
 import com.vromita.incident_management_system.mapper.IncidentMapper;
 import com.vromita.incident_management_system.model.Incident;
 import com.vromita.incident_management_system.model.Status;
+import com.vromita.incident_management_system.repository.AppUserRepository;
 import com.vromita.incident_management_system.repository.IncidentRepository;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -16,10 +18,12 @@ import java.util.List;
 public class IncidentService {
 
     private final IncidentRepository incidentRepository;
+    private final AppUserRepository appUserRepository;
 
     // Constructor injection
-    public IncidentService(IncidentRepository incidentRepository){
+    public IncidentService(IncidentRepository incidentRepository,  AppUserRepository appUserRepository) {
         this.incidentRepository=incidentRepository;
+        this.appUserRepository=appUserRepository;
     }
 
 
@@ -32,6 +36,15 @@ public class IncidentService {
     public Incident createIncident(IncidentRequest incidentRequest){
 
         Incident incident = IncidentMapper.toEntity(incidentRequest);
+
+        if(incidentRequest.getAssignedTo() != null){
+
+            incident.setAssignedTo(
+            appUserRepository.findByUsername(incidentRequest.getAssignedTo()).orElseThrow(() ->
+                    new UsernameNotFoundException(incidentRequest.getAssignedTo()))
+            );
+
+        }
 
         incident.setSlaDeadline(LocalDateTime.now().plusHours(incident.getPriority().getSlaHours()));
 
@@ -58,7 +71,7 @@ public class IncidentService {
      */
 
     public Incident getIncidentById(long id){
-        return incidentRepository.findById(id) .orElseThrow(() ->
+        return incidentRepository.findById(id).orElseThrow(() ->
                 new IncidentNotFoundException("Incident with id " + id + " not found"));
 
     }
@@ -81,6 +94,13 @@ public class IncidentService {
         }
 
         IncidentMapper.toUpdate(incidentById, request);
+
+        if(request.getAssignedTo() != null){
+
+            incidentById.setAssignedTo(appUserRepository.findByUsername(request.getAssignedTo()).orElseThrow(() ->
+                    new UsernameNotFoundException(request.getAssignedTo())));
+
+        }
 
         incidentById.setClosedAt(
                 request.getStatus() == Status.CLOSED ? LocalDateTime.now() : null

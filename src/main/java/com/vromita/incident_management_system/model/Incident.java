@@ -50,8 +50,9 @@ public class Incident {
     private LocalDateTime closedAt;
 
 
-    @Column(name = "assigned_to")
-    private String assignedTo;
+    @ManyToOne
+    @JoinColumn(name = "assigned_to")
+    private AppUser assignedTo;
 
     @Column(name = "sla_deadline")
     private LocalDateTime slaDeadline;
@@ -106,7 +107,7 @@ public class Incident {
         return updatedAt;
     }
 
-    public String getAssignedTo() {
+    public AppUser getAssignedTo() {
         return assignedTo;
     }
 
@@ -158,7 +159,7 @@ public class Incident {
         this.updatedAt = updatedAt;
     }
 
-    public void setAssignedTo(String assignedTo) {
+    public void setAssignedTo(AppUser assignedTo) {
         this.assignedTo = assignedTo;
     }
 

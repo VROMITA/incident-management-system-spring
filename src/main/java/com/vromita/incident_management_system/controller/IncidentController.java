@@ -1,6 +1,7 @@
 package com.vromita.incident_management_system.controller;
 
 import com.vromita.incident_management_system.dto.IncidentRequest;
+import com.vromita.incident_management_system.dto.IncidentResponse;
 import com.vromita.incident_management_system.exception.IncidentNotFoundException;
 import com.vromita.incident_management_system.model.Incident;
 import com.vromita.incident_management_system.service.IncidentService;
@@ -9,7 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.vromita.incident_management_system.mapper.IncidentMapper.toResponse;
 
 /**
  * REST controller for managing incidents
@@ -32,9 +36,13 @@ public class IncidentController {
      * @return the incidents created with 201 status code
      */
     @PostMapping("")
-    public ResponseEntity<Incident> createIncident(@Valid @RequestBody IncidentRequest incidentRequest) {
+    public ResponseEntity<IncidentResponse> createIncident(@Valid @RequestBody IncidentRequest incidentRequest) {
+
         Incident incident = incidentService.createIncident(incidentRequest);
-        return ResponseEntity.status(201).body(incident);
+
+        IncidentResponse response = toResponse(incident);
+
+        return ResponseEntity.status(201).body(response);
     }
 
     /**
@@ -43,11 +51,19 @@ public class IncidentController {
      * @return all the incidents with 200 status code
      */
     @GetMapping("")
-    public ResponseEntity<List<Incident>> getAllIncidents() {
+    public ResponseEntity<List<IncidentResponse>> getAllIncidents() {
 
         List<Incident> incidentList = incidentService.getAllIncidents();
 
-        return ResponseEntity.status(200).body(incidentList);
+        List<IncidentResponse> incidentResponseList = new ArrayList<>();
+
+        for(Incident incident : incidentList) {
+
+            IncidentResponse response = toResponse(incident);
+            incidentResponseList.add(response);
+        }
+
+        return ResponseEntity.status(200).body(incidentResponseList);
     }
 
     /**
@@ -56,11 +72,13 @@ public class IncidentController {
      * @return  the incident with 200 status code or 404 not found
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Incident> getIncidentById(@PathVariable long id) {
+    public ResponseEntity<IncidentResponse> getIncidentById(@PathVariable long id) {
 
         Incident incident = incidentService.getIncidentById(id);
 
-        return ResponseEntity.status(200).body(incident);
+        IncidentResponse response = toResponse(incident);
+
+        return ResponseEntity.status(200).body(response);
     }
 
     /**
@@ -70,11 +88,13 @@ public class IncidentController {
      * @throws IncidentNotFoundException if no incident is found with the given ID
      */
     @PutMapping("/{id}")
-    public ResponseEntity<Incident> updateIncident(@PathVariable long id, @Valid @RequestBody IncidentRequest request) {
+    public ResponseEntity<IncidentResponse> updateIncident(@PathVariable long id, @Valid @RequestBody IncidentRequest request) {
 
         Incident incident = incidentService.updateIncident(id, request);
 
-        return ResponseEntity.status(200).body(incident);
+        IncidentResponse response = toResponse(incident);
+
+        return ResponseEntity.status(200).body(response);
 
     }
 
