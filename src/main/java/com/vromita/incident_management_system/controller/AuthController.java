@@ -65,4 +65,5 @@ public class AuthController {
     public ResponseEntity<String> logout() {
         return ResponseEntity.status(200).body("You have been logged out");
     }
+
 }

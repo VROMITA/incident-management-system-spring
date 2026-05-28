@@ -72,6 +72,9 @@ Deletes an incident by ID. Returns `204 No Content` or `404 Not Found`. - Only L
 ### `POST /auth/login`
 Login with username and password - authentication required
 
+### `POST /auth/logout`
+Logout with `200 OK`, plus logout message
+
 ### `POST /api/incidents/{id}/comments`
 Create a new comment on the selected incident
 
@@ -181,9 +184,14 @@ mvn test
 - Comment System: User can add comments and retrieve comments from incidents
 - Automatic SLA reset when the assigned team responds with a comment
 
+### v2.1.1 — Logout Endpoint
+
+- Logout endpoint with 200 status code + Logout Message - POST /auth/logout
+- Being stateless, the server does not keep in memory the token. The client should delete it.
+  Therefore, from server perspective the token will stay active until the expiration.
+
 ## Roadmap
 
-- **v2.2** — Logout endpoint
 - **v2.3** — Complete RBAC (Incident → AppUser + ownership + escalation validation)
 - **v3.0** — Swagger / OpenAPI + Production deployment (Railway + demo accounts)
 
