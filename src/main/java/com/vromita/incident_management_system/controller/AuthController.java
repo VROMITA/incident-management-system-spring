@@ -52,4 +52,17 @@ public class AuthController {
         return ResponseEntity.ok(jwtUtil.generateToken(userDetails));
 
     }
+
+    /**
+     * The method return 200 status code with a message.
+     * Being stateless, the server doesn't keep in memory the token.
+     * The client should delete the token but the on the server side the token will
+     * remain active until the expiration
+     *
+     * @return 200 code plus logout message
+     */
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout() {
+        return ResponseEntity.status(200).body("You have been logged out");
+    }
 }
