@@ -178,7 +178,7 @@ mvn test
 - Role-based access control (RBAC) — L1, L2, L3
 - Delete restricted to L3 via @PreAuthorize
 - 403 Forbidden for unauthorized actions
-- 
+
 ### v2.1 — Comment System
 
 - Comment System: User can add comments and retrieve comments from incidents
