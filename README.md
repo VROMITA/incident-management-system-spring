@@ -190,9 +190,16 @@ mvn test
 - Being stateless, the server does not keep in memory the token. The client should delete it.
   Therefore, from server perspective the token will stay active until the expiration.
 
+### v2.3 — RBAC + Escalation
+- RBAC check on updateIncident — only the assigned team can modify a ticket
+- Escalation validation — L1 can only escalate to L2
+- SLA reset on team or priority change
+- assignedTo migrated from String to AppUser (foreign key)
+- IncidentResponse DTO — no sensitive data exposed in responses
+
 ## Roadmap
 
-- **v2.3** — Complete RBAC (Incident → AppUser + ownership + escalation validation)
+- **v2.4** — Test coverage (JUnit 5 + Mockito)
 - **v3.0** — Swagger / OpenAPI + Production deployment (Railway + demo accounts)
 
 ## License
