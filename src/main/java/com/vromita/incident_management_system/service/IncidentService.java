@@ -94,6 +94,10 @@ public class IncidentService {
             throw new AccessDeniedException("Access denied");
         }
 
+        if(incidentById.getAssignedTeam().name().equals("L1") && request.getAssignedTeam().name().equals("L3")){
+            throw new AccessDeniedException("Access denied");
+        }
+
         if (request.getPriority() != incidentById.getPriority() ||
                 request.getAssignedTeam() != incidentById.getAssignedTeam()){
 
