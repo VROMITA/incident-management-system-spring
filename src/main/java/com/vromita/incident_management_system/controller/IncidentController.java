@@ -8,6 +8,7 @@ import com.vromita.incident_management_system.service.IncidentService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -88,9 +89,10 @@ public class IncidentController {
      * @throws IncidentNotFoundException if no incident is found with the given ID
      */
     @PutMapping("/{id}")
-    public ResponseEntity<IncidentResponse> updateIncident(@PathVariable long id, @Valid @RequestBody IncidentRequest request) {
+    public ResponseEntity<IncidentResponse> updateIncident(@PathVariable long id, @Valid @RequestBody IncidentRequest request,
+                                                           Authentication authentication) {
 
-        Incident incident = incidentService.updateIncident(id, request);
+        Incident incident = incidentService.updateIncident(id, request, authentication.getName());
 
         IncidentResponse response = toResponse(incident);
 

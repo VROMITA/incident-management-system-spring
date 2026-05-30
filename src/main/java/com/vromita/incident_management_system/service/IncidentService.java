@@ -3,13 +3,14 @@ package com.vromita.incident_management_system.service;
 import com.vromita.incident_management_system.dto.IncidentRequest;
 import com.vromita.incident_management_system.exception.IncidentNotFoundException;
 import com.vromita.incident_management_system.mapper.IncidentMapper;
+import com.vromita.incident_management_system.model.AppUser;
 import com.vromita.incident_management_system.model.Incident;
 import com.vromita.incident_management_system.model.Status;
 import com.vromita.incident_management_system.repository.AppUserRepository;
 import com.vromita.incident_management_system.repository.IncidentRepository;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -82,11 +83,19 @@ public class IncidentService {
      * @param request a DTO is given to update the incident
      * @return return the incident with the new values
      */
-    public Incident updateIncident(Long id, IncidentRequest request){
+    public Incident updateIncident(Long id, IncidentRequest request, String username){
+
+        AppUser appUser = appUserRepository.findByUsername(username).orElseThrow(() ->
+                new UsernameNotFoundException(username));
 
         Incident incidentById = getIncidentById(id);
 
-        if (request.getPriority()!= incidentById.getPriority()){
+        if(!incidentById.getAssignedTeam().name().equals(appUser.getRole().name())){
+            throw new AccessDeniedException("Access denied");
+        }
+
+        if (request.getPriority() != incidentById.getPriority() ||
+                request.getAssignedTeam() != incidentById.getAssignedTeam()){
 
             incidentById.setSlaDeadline(
                     LocalDateTime.now().plusHours(request.getPriority().getSlaHours()));
