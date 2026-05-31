@@ -157,7 +157,7 @@ src/main/java/com/vromita/incident_management_system/
 mvn test
 ```
 
-6 unit tests covering the Service layer with JUnit 5 and Mockito.
+12 unit tests covering the Service layer with JUnit 5 and Mockito.
 
 ## Versions
 
@@ -196,6 +196,7 @@ mvn test
 - SLA reset on team or priority change
 - assignedTo migrated from String to AppUser (foreign key)
 - IncidentResponse DTO — no sensitive data exposed in responses
+- 6 unit tests covering Service layer
 
 ## Roadmap
 
