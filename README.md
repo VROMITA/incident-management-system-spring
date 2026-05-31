@@ -200,7 +200,6 @@ mvn test
 
 ## Roadmap
 
-- **v2.4** — Test coverage (JUnit 5 + Mockito)
 - **v3.0** — Swagger / OpenAPI + Production deployment (Railway + demo accounts)
 
 ## License
