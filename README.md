@@ -42,14 +42,26 @@ docker run --name postgres-ims \
   -d postgres:16
 ```
 
-### 2. Run the application
+### 2. Create application-local.yaml
+Create `src/main/resources/application-local.yaml`:
+
+```yaml
+spring:
+  datasource:
+    password: <same password used in Docker command above>
+
+jwt:
+  secret: "generate with: openssl rand -base64 32"
+```
+
+### 3. Run the application
 ```bash
 mvn spring-boot:run
 ```
 
-### 3. The API will be available at
+### 4. Access Swagger UI
 ```
-http://localhost:8080/api/incidents
+http://localhost:8080/swagger-ui.html
 ```
 
 ## API Endpoints
@@ -198,9 +210,11 @@ mvn test
 - IncidentResponse DTO — no sensitive data exposed in responses
 - 6 unit tests covering Service layer
 
-## Roadmap
-
-- **v3.0** — Swagger / OpenAPI + Production deployment (Railway + demo accounts)
+### v3.0 — Swagger/OpenAPI
+- Swagger UI available at /swagger-ui.html
+- OpenAPI documentation auto-generated from controllers
+- JWT Bearer authentication integrated in Swagger UI
+- All endpoints documented with request/response schemas
 
 ## License
 This project is licensed under the MIT License.
