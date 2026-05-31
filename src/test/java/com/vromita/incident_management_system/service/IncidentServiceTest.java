@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.access.AccessDeniedException;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -143,6 +144,56 @@ public class IncidentServiceTest {
        verify(incidentRepository, times(1)).save(any(Incident.class));
 
 
+    }
+
+    @Test
+    void updateIncident_shouldThrowException_whenUserNotInAssignedTeam(){
+       Incident incident = new Incident();
+       incident.setId(1L);
+       incident.setTitle("Server down");
+       incident.setPriority(Priority.CRITICAL);
+       incident.setAssignedTeam(Team.L3);
+
+       IncidentRequest request = new IncidentRequest();
+       request.setTitle("Server down");
+       request.setPriority(Priority.CRITICAL);
+
+       AppUser appUser = new AppUser();
+       appUser.setId(1L);
+       appUser.setUsername("userTest");
+       appUser.setRole(Role.L2);
+
+       when(incidentRepository.findById(1L)).thenReturn(Optional.of(incident));
+       when(appUserRepository.findByUsername("userTest")).thenReturn(Optional.of(appUser));
+
+       assertThrows(AccessDeniedException.class,
+               () -> incidentService.updateIncident(1L, request , appUser.getUsername()));
+    }
+
+    @Test
+    void updateIncident_shouldThrowException_whenL1EscalatesToL3(){
+        Incident incident = new Incident();
+        incident.setId(1L);
+        incident.setTitle("Server down");
+        incident.setPriority(Priority.CRITICAL);
+        incident.setAssignedTeam(Team.L1);
+
+        IncidentRequest request = new IncidentRequest();
+        request.setTitle("Server down");
+        request.setPriority(Priority.CRITICAL);
+
+        AppUser appUser = new AppUser();
+        appUser.setId(1L);
+        appUser.setUsername("userTest");
+        appUser.setRole(Role.L1);
+
+        when(incidentRepository.findById(1L)).thenReturn(Optional.of(incident));
+        when(appUserRepository.findByUsername("userTest")).thenReturn(Optional.of(appUser));
+
+        request.setAssignedTeam(Team.L3);
+
+        assertThrows(AccessDeniedException.class,
+                () -> incidentService.updateIncident(1L, request , appUser.getUsername()));
     }
 
    }
