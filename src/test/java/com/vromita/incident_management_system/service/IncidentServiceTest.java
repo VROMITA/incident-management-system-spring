@@ -2,9 +2,8 @@ package com.vromita.incident_management_system.service;
 
 import com.vromita.incident_management_system.dto.IncidentRequest;
 import com.vromita.incident_management_system.exception.IncidentNotFoundException;
-import com.vromita.incident_management_system.model.Incident;
-import com.vromita.incident_management_system.model.Priority;
-import com.vromita.incident_management_system.model.Source;
+import com.vromita.incident_management_system.model.*;
+import com.vromita.incident_management_system.repository.AppUserRepository;
 import com.vromita.incident_management_system.repository.IncidentRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,6 +23,9 @@ public class IncidentServiceTest {
 
    @Mock
    private IncidentRepository incidentRepository;
+
+   @Mock
+   private AppUserRepository appUserRepository;
 
    @InjectMocks
    private IncidentService incidentService;
@@ -119,6 +121,12 @@ public class IncidentServiceTest {
       incident.setId(1L);
       incident.setTitle("Server down");
       incident.setPriority(Priority.LOW);
+      incident.setAssignedTeam(Team.L3);
+      AppUser appUser = new AppUser();
+      appUser.setId(1L);
+      appUser.setUsername("userTest");
+      appUser.setRole(Role.L3);
+
 
       IncidentRequest request = new IncidentRequest();
       request.setTitle("Server down");
@@ -126,8 +134,9 @@ public class IncidentServiceTest {
 
       when(incidentRepository.findById(1L)).thenReturn(Optional.of(incident));
       when(incidentRepository.save(any(Incident.class))).thenReturn(incident);
+      when(appUserRepository.findByUsername("userTest")).thenReturn(Optional.of(appUser));
 
-      Incident result = incidentService.updateIncident(1L, request);
+      Incident result = incidentService.updateIncident(1L, request, appUser.getUsername());
 
        assertNotNull(result);
        assertNotNull(result.getSlaDeadline());
